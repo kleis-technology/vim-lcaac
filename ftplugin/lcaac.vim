@@ -17,7 +17,14 @@ setlocal expandtab
 setlocal tabstop=4
 
 " CLI commands
-command! -buffer -nargs=+ LcaacAssess  !lcaac assess <args>
-command! -buffer -nargs=* LcaacTest    !lcaac test <args>
-command! -buffer -nargs=+ LcaacTrace   !lcaac trace <args>
-command! -buffer           LcaacVersion !lcaac version
+function! s:LcaacRun(cmd, args)
+  let output = systemlist('lcaac ' . a:cmd . (len(a:args) ? ' ' . a:args : '') . ' | column -t -s,')
+  new
+  setlocal buftype=nofile bufhidden=wipe noswapfile
+  call setline(1, output)
+endfunction
+
+command! -buffer -nargs=+ LcaacAssess  call s:LcaacRun('assess', <q-args>)
+command! -buffer -nargs=* LcaacTest    call s:LcaacRun('test', <q-args>)
+command! -buffer -nargs=+ LcaacTrace   call s:LcaacRun('trace', <q-args>)
+command! -buffer           LcaacVersion call s:LcaacRun('version', '')
