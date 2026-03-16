@@ -31,6 +31,27 @@ Clone the repository into your Vim packages directory:
 git clone https://github.com/kleis-technology/vim-lcaac ~/.vim/pack/plugins/start/vim-lcaac
 ```
 
+## Commands
+
+These commands wrap the `lcaac` CLI and are available in `.lca` buffers. Additional flags and options supported by the CLI can be appended directly.
+
+| Command | Description |
+|---------|-------------|
+| `:LcaacAssess {name} [opts]` | Returns the unitary impacts of a process in CSV format |
+| `:LcaacTest [name] [opts]` | Runs all tests, or only those matching the given process name |
+| `:LcaacTrace {name} [opts]` | Traces the contributions of a process |
+| `:LcaacVersion` | Prints the `lcaac` version |
+
+Examples:
+
+```vim
+:LcaacAssess my_process
+:LcaacAssess my_process -l geo="FR" -D x="12 kg"
+:LcaacTest
+:LcaacTest my_process
+:LcaacTrace my_process -f params.csv
+```
+
 ## License
 
 Affero GPL — see [LICENSE.txt](LICENSE.txt).
